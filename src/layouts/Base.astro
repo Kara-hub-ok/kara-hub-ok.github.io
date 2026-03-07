@@ -36,7 +36,10 @@ const { title } = Astro.props;
     .container {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 2rem 1.5rem;
+      padding: 2rem 2.5rem;
+    }
+    @media (max-width: 768px) {
+      .container { padding: 2rem 1.5rem; }
     }
 
     /* Header */
@@ -164,6 +167,22 @@ const { title } = Astro.props;
       font-size: 8rem;
       opacity: 0.04;
     }
+    .hero-inner {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    @media (max-width: 768px) {
+      .hero-inner { flex-direction: column; text-align: center; }
+    }
+    .hero-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+    }
     .hero-card h2 {
       font-size: 1.8rem;
       font-weight: 700;
@@ -211,6 +230,7 @@ const { title } = Astro.props;
     article {
       max-width: 680px;
       margin: 0 auto;
+      padding: 0 1rem;
     }
     article h1 {
       font-size: 1.8rem;
