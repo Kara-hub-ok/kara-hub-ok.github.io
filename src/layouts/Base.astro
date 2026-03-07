@@ -260,6 +260,122 @@ const { title } = Astro.props;
       font-size: 0.95rem;
     }
 
+    /* ID Card */
+    .idcard {
+      padding: 1.5rem 2rem;
+      color: #4a3728;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .idcard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+    }
+    .idcard-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #c77dba;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+    }
+    .idcard-no {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #8a7060;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .idcard-body {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+    .idcard-photo {
+      width: 130px;
+      height: 150px;
+      flex-shrink: 0;
+      border: 2px dashed #d4b896;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+      padding: 4px;
+    }
+    .idcard-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    .idcard-info {
+      flex: 1;
+    }
+    .idcard-name {
+      display: block;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #c77dba;
+      font-style: italic;
+      line-height: 1.2;
+      margin-bottom: 0.2rem;
+    }
+    .idcard-date {
+      display: block;
+      font-size: 0.8rem;
+      color: #6db89a;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 0.15rem 0.5rem;
+      background: rgba(109,184,154,0.1);
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .idcard-desc {
+      font-size: 0.78rem;
+      line-height: 1.6;
+      color: #5a4a3a;
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+    .idcard-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.2rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid rgba(200,180,150,0.3);
+    }
+    .idcard-fav {
+      font-style: italic;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #8a7060;
+    }
+    .idcard-mode {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #c77dba;
+      font-weight: 600;
+    }
+    .idcard-expire {
+      font-size: 0.65rem;
+      font-weight: 700;
+      background: #e85a7c;
+      color: #fff;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    @media (max-width: 768px) {
+      .idcard-body { flex-direction: column; align-items: center; text-align: center; }
+      .idcard-photo { width: 100px; height: 120px; }
+      .idcard-name { font-size: 1.6rem; }
+      .idcard-footer { flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+    }
+
     /* Footer */
     .site-footer {
       text-align: center;
