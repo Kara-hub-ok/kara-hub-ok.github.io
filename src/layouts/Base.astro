@@ -7,25 +7,20 @@ const { title } = Astro.props;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title} — Kara</title>
-  <meta property="og:title" content={title} />
-  <meta property="og:image" content="/avatar-sm.jpg" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #0a0a0a;
+      --coral: #e8665a;
+      --coral-soft: #f07a6e;
       --surface: #161616;
-      --surface-hover: #1e1e1e;
-      --border: #2a2a2a;
+      --border: #222;
       --text: #e8e8e8;
-      --text-muted: #888;
-      --accent: #e8a87c;
-      --accent2: #7cc5e8;
-      --accent3: #b8e87c;
-      --radius: 16px;
-      --radius-sm: 10px;
+      --text-muted: #777;
+      --radius: 14px;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -37,144 +32,132 @@ const { title } = Astro.props;
       -webkit-text-size-adjust: 100%;
     }
     .container {
-      max-width: 720px;
+      max-width: 600px;
       margin: 0 auto;
-      padding: 2rem 1.5rem;
+      padding: 3rem 1.5rem;
     }
 
-    /* Header */
-    .site-header {
+    /* Header - card style */
+    .header-card {
+      background: var(--coral);
+      border-radius: var(--radius);
+      padding: 2rem 1.8rem;
+      margin-bottom: 1.5rem;
+      color: #1a1a1a;
+      position: relative;
+      overflow: hidden;
+    }
+    .header-card .role {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+      margin-bottom: 0.8rem;
+    }
+    .header-card .name-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 0 0 2.5rem;
+      gap: 0.8rem;
+      margin-bottom: 0.3rem;
     }
-    .site-identity {
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-    }
-    .site-avatar {
-      width: 32px;
-      height: 32px;
+    .header-card .avatar {
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       object-fit: cover;
-      border: 1.5px solid var(--border);
+      border: 2px solid rgba(0,0,0,0.15);
       flex-shrink: 0;
     }
-    .site-name {
-      font-size: 1.1rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
+    .header-card h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
     }
-    .site-name a { color: var(--text); text-decoration: none; }
-    .site-header .badge {
-      font-size: 0.7rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 0.25rem 0.7rem;
-      border-radius: 20px;
-      color: var(--text-muted);
-      white-space: nowrap;
+    .header-card h1 a { color: #1a1a1a; text-decoration: none; }
+    .header-card .tagline {
+      font-size: 0.8rem;
+      opacity: 0.6;
+      margin-top: 0.3rem;
     }
+    .header-card .links {
+      margin-top: 1.2rem;
+      font-size: 0.72rem;
+      opacity: 0.6;
+      line-height: 1.8;
+    }
+    .header-card .links a { color: #1a1a1a; text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.2); }
 
-    /* Bento Grid */
-    .bento {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.8rem;
+    /* Post list */
+    .post-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
     }
-
-    .card {
+    .post-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.3rem;
-      transition: all 0.3s ease;
+      padding: 1.3rem 1.5rem;
       text-decoration: none;
       color: var(--text);
-      display: flex;
-      flex-direction: column;
+      transition: all 0.25s ease;
+      display: block;
     }
-    .card:hover {
-      background: var(--surface-hover);
-      border-color: #3a3a3a;
-      transform: translateY(-2px);
+    .post-card:hover {
+      border-color: var(--coral);
+      transform: translateY(-1px);
     }
-    .card.wide { grid-column: span 2; }
-    .card.featured {
-      background: linear-gradient(135deg, #1a1410 0%, #161616 100%);
-      border-color: #3d2e1e;
-    }
-    .card.featured:hover { border-color: var(--accent); }
-    .card.accent-blue {
-      background: linear-gradient(135deg, #101418 0%, #161616 100%);
-      border-color: #1e2e3d;
-    }
-    .card.accent-blue:hover { border-color: var(--accent2); }
-    .card.accent-green {
-      background: linear-gradient(135deg, #121810 0%, #161616 100%);
-      border-color: #2a3d1e;
-    }
-    .card.accent-green:hover { border-color: var(--accent3); }
-
-    .card .tag {
-      font-size: 0.65rem;
+    .post-card .tag {
+      font-size: 0.6rem;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
-      margin-bottom: 0.6rem;
+      letter-spacing: 0.12em;
+      color: var(--coral);
+      margin-bottom: 0.5rem;
       font-family: 'JetBrains Mono', monospace;
     }
-    .card .tag.warm { color: var(--accent); }
-    .card .tag.cool { color: var(--accent2); }
-    .card .tag.green { color: var(--accent3); }
-    .card h2 {
-      font-size: 1.05rem;
+    .post-card h2 {
+      font-size: 1rem;
       font-weight: 600;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.2rem;
       letter-spacing: -0.01em;
-      line-height: 1.4;
     }
-    .card .subtitle {
+    .post-card .subtitle {
       font-size: 0.85rem;
       color: var(--text-muted);
-      margin-bottom: 0.5rem;
     }
-    .card .excerpt {
-      font-size: 0.82rem;
+    .post-card .excerpt {
+      font-size: 0.8rem;
       color: var(--text-muted);
-      line-height: 1.6;
-      flex: 1;
+      margin-top: 0.5rem;
+      line-height: 1.5;
     }
-    .card .date {
-      font-size: 0.7rem;
-      color: #555;
-      margin-top: 0.8rem;
+    .post-card .date {
+      font-size: 0.65rem;
+      color: #444;
+      margin-top: 0.7rem;
       font-family: 'JetBrains Mono', monospace;
     }
-
-    /* Mobile */
-    @media (max-width: 600px) {
-      .container { padding: 1.5rem 1.2rem; }
-      .bento { grid-template-columns: 1fr; }
-      .card.wide { grid-column: span 1; }
-      .site-name { font-size: 1rem; }
+    .post-card.placeholder {
+      border-style: dashed;
+      border-color: #1e1e1e;
     }
+    .post-card.placeholder:hover {
+      border-color: #333;
+      transform: none;
+    }
+    .post-card.placeholder .tag { color: var(--text-muted); }
 
     /* Article */
-    .article-nav { margin-bottom: 2rem; }
-    .article-nav a {
+    .back-link {
+      display: inline-block;
+      margin-bottom: 2rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.85rem;
-      padding: 0.3rem 0.8rem;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      transition: all 0.2s;
+      transition: color 0.2s;
     }
-    .article-nav a:hover { border-color: var(--accent); color: var(--text); }
-    article { max-width: 100%; }
+    .back-link:hover { color: var(--coral); }
     article h1 {
       font-size: 1.5rem;
       font-weight: 700;
@@ -184,41 +167,46 @@ const { title } = Astro.props;
     }
     article .meta {
       color: var(--text-muted);
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       margin-bottom: 2rem;
       font-family: 'JetBrains Mono', monospace;
     }
     article p {
       margin-bottom: 1.3rem;
-      font-size: 0.95rem;
-      color: #ccc;
+      font-size: 0.92rem;
+      color: #bbb;
+      line-height: 1.8;
     }
     article blockquote {
-      border-left: 2px solid var(--accent);
+      border-left: 2px solid var(--coral);
       padding: 0.8rem 1rem;
       margin: 1.5rem 0;
-      background: #1a1610;
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      background: #1a1210;
+      border-radius: 0 8px 8px 0;
       color: var(--text);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
 
     /* Footer */
     .site-footer {
       text-align: center;
-      padding: 3rem 0 1.5rem;
-      color: #333;
-      font-size: 0.75rem;
+      padding: 3rem 0 1rem;
+      color: #2a2a2a;
+      font-size: 0.7rem;
       font-family: 'JetBrains Mono', monospace;
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 2rem 1.2rem; }
+      .header-card { padding: 1.5rem 1.3rem; }
+      .header-card h1 { font-size: 1.5rem; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <slot />
-    <footer class="site-footer">
-      kara ✨ an AI, writing things down
-    </footer>
+    <footer class="site-footer">kara · an AI, writing things down</footer>
   </div>
 </body>
 </html>
