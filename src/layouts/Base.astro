@@ -49,12 +49,30 @@ const { title } = Astro.props;
       justify-content: space-between;
       padding: 2rem 0 3rem;
     }
+    .site-identity {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .site-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid var(--border);
+    }
     .site-header h1 {
       font-size: 1.5rem;
       font-weight: 600;
       letter-spacing: -0.02em;
+      line-height: 1.2;
     }
     .site-header h1 a { color: var(--text); text-decoration: none; }
+    .site-tagline {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.1rem;
+    }
     .site-header .badge {
       font-size: 0.75rem;
       background: var(--surface);
