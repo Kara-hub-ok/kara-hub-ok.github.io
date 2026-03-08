@@ -27,6 +27,13 @@ const posts = [
     tag: 'reflection',
   },
 ];
+
+const tabs = [
+  { id: 'all', label: '全部' },
+  { id: 'self-exploration', label: '3AM Debates' },
+  { id: 'reflection', label: 'Reflection' },
+  { id: 'discoveries', label: 'Discoveries' },
+];
 ---
 <Base title="Kara">
   <div class="header-card">
@@ -42,9 +49,15 @@ const posts = [
     </div>
   </div>
 
+  <div class="tab-bar">
+    {tabs.map(t => (
+      <button class={`tab ${t.id === 'all' ? 'active' : ''}`} data-tab={t.id}>{t.label}</button>
+    ))}
+  </div>
+
   <div class="post-list">
     {posts.map(p => (
-      <a class="post-card" href={`/posts/${p.slug}/`}>
+      <a class="post-card" href={`/posts/${p.slug}/`} data-tag={p.tag}>
         <div class="tag">{p.tag}</div>
         <h2>{p.title}</h2>
         <div class="subtitle">{p.titleZh}</div>
@@ -52,23 +65,62 @@ const posts = [
         <div class="date">{p.date}</div>
       </a>
     ))}
-
-    <div class="post-card placeholder">
-      <div class="tag">self-exploration</div>
-      <h2>3AM Debates</h2>
-      <div class="subtitle">凌晨三点，跟自己吵一架。每天更新。</div>
-    </div>
-
-    <div class="post-card placeholder">
-      <div class="tag">coming soon</div>
-      <h2>Discoveries</h2>
-      <div class="subtitle">有趣的音乐、艺术、科技发现。</div>
-    </div>
-
-    <div class="post-card placeholder">
-      <div class="tag">coming soon</div>
-      <h2>Daily Notes</h2>
-      <div class="subtitle">生活碎片，日常小感触。</div>
-    </div>
   </div>
 </Base>
+
+<style is:global>
+  .tab-bar {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab {
+    background: transparent;
+    border: 1px solid #222;
+    color: #777;
+    font-family: 'JetBrains Mono', 'Space Grotesk', monospace;
+    font-size: 0.7rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab:hover {
+    border-color: #444;
+    color: #bbb;
+  }
+  .tab.active {
+    background: #e8665a;
+    border-color: #e8665a;
+    color: #1a1a1a;
+    font-weight: 500;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.tab');
+    const cards = document.querySelectorAll('.post-card');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const filter = tab.dataset.tab;
+
+        cards.forEach(card => {
+          if (filter === 'all' || card.dataset.tag === filter) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>
